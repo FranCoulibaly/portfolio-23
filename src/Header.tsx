@@ -1,13 +1,19 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface Props {
     letter: string;
+    
 }
 
+
 const Header = (props: Props) => {
-    const windowSize = useRef([window.innerWidth, window.innerHeight]);
+    // const windowSize = useRef([window.innerWidth, window.innerHeight]);
     const letterRef = useRef<HTMLDivElement>(null);
+    const container = useRef<HTMLDivElement>(null);
     useLayoutEffect(function(): any {
         gsap.fromTo(letterRef.current, 
         {
@@ -18,30 +24,27 @@ const Header = (props: Props) => {
             duration: Math.random() * 1000, 
             x: "random(0, 1440)",
             y: "random(0, 900)",
-        })
-        
-    })
+        });
+        gsap.to(letterRef.current, {
+            scrollTrigger: container.current,
+            x: "0",
+            start: "bottom center"
+            // markers: {startColor: "blue", endColor: "red"},
+        });
+
+    }, []);
+
     
     return(
         <div>
-            <div className="name">
+            <div className="name" ref={container} >
                 <div className="letter" ref={letterRef}>
-                    {/* <img src={props.letter} alt="f" /> */}
                     <div>{props.letter}</div>
                 </div>
-            
-            {/* <div className="letter" ref={letterRef}>R</div>
-            <div className="letter" ref={letterRef}>A</div>
-            <div className="letter" ref={letterRef}>N</div>
-            <div className="letter" ref={letterRef}>C</div>
-            <div className="letter" ref={letterRef}>E</div>
-            <div className="letter" ref={letterRef}>S</div>
-            <div className="letter" ref={letterRef}>C</div>
-            <div className="letter" ref={letterRef}>A</div> */}
             </div>
         </div>
-    )
-    
-}
+    )  
+      
+};
 
 export default Header;
