@@ -6,12 +6,27 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
         <p>
           Hey there.
         </p>
-        <Header/>
-      </header>
+        <Header letter={"F"} />
+        <Header letter={"R"} />
+        <Header letter={"A"} />
+        <Header letter={"N"} />
+        <Header letter={"C"} />
+        <Header letter={"E"} />
+        <Header letter={"S"} />
+        <Header letter={"C"} />
+        <Header letter={"A"} />
+        <Header letter={"C"} />
+        <Header letter={"O"} />
+        <Header letter={"U"} />
+        <Header letter={"L"} />
+        <Header letter={"I"} />
+        <Header letter={"B"} />
+        <Header letter={"A"} />
+        <Header letter={"L"} />
+        <Header letter={"Y"} />
     </div>
   );
 }
