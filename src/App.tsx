@@ -1,32 +1,23 @@
-import React from 'react';
+import React, { createRef, HTMLAttributes, useLayoutEffect, useRef, useState } from 'react';
 import logo from './logo.svg';
 import Header from './Header';
 import './App.css';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { gsap } from "gsap";
+
 
 function App() {
+   const parentContainer = useRef(null);
+
   return (
-    <div className="App">
+    <div className="App" >
         <p>
           Hey there.
         </p>
-        <Header letter={"F"} />
-        <Header letter={"R"} />
-        <Header letter={"A"} />
-        <Header letter={"N"} />
-        <Header letter={"C"} />
-        <Header letter={"E"} />
-        <Header letter={"S"} />
-        <Header letter={"C"} />
-        <Header letter={"A"} />
-        <Header letter={"C"} />
-        <Header letter={"O"} />
-        <Header letter={"U"} />
-        <Header letter={"L"} />
-        <Header letter={"I"} />
-        <Header letter={"B"} />
-        <Header letter={"A"} />
-        <Header letter={"L"} />
-        <Header letter={"Y"} />
+        <div ref={parentContainer}>
+          <Header />
+          
+        </div>
     </div>
   );
 }
