@@ -10,58 +10,60 @@ export interface Props {
 
 const Header = () => {
     const container = useRef<HTMLDivElement>(null);
+    const windowSize = useRef([window.innerWidth, window.innerHeight]);
+
 
     let name: string = "FRANCESCA COULIBALY";
-    let nameArr: string[] = Array.from(name);
+    let nameArr: string[] = name.split('');
     const refs: any[] = [];
 
     useLayoutEffect(function(): any {
+        console.log(nameArr);
+        let width = windowSize.current[0];
+        let height= windowSize.current[1];
+        let x = (): number => {
+            return Math.random() * (width - 200);
+            }
+        let y = (): number => {
+            return Math.random() * (height - 200);
+            }
+
         refs.forEach(value => {
-            // console.log("refs:", value.current);
             gsap.fromTo(value.current, {
-                x: "random(0, 1400)",
-                y: "random(0, 900)",
+                x: x,
+                y: y,
             },
             {
-                duration: Math.random() * 1000, 
-                x: "random(0, 1440)",
-                y: "random(0, 900)",
-            });
-
-            
+                duration: Math.random() * 100, 
+                x: x,
+                y: y,
+                
+            }); 
         });
-        
-         
-        const snapLetters: any = () => {
-            refs.forEach(value => {
-                gsap.to(value.current, {
-                    x: 0,
-                    y: 0,
-                    duration: 2,
-                });
-                console.log(value.current);
-            })
-        } 
-        // console.log([...refs]);
-        //  ScrollTrigger.create({
-        //      trigger: container.current,
-        //      // pin: container.current,
-        //      start: "bottom",
-        //      animation: snapLetters,
-        //      markers: true,
-             
-        //  });
-     }, []);
-    
-    
+
+        refs.forEach(ref => {
+            gsap.to(ref.current, {
+                x: 0,
+                y: 0,
+                duration: 10,
+                scrollTrigger: {
+                    trigger: container.current,
+                    // pin: container.current,
+                    start: 10,
+                    markers: true,
+                } 
+            })      
+        });
+    }, []);
+     
     return(
         <div className="container" ref={container}>
             <div className="name">
             {
-            nameArr.map((value, key) => {
+            nameArr.map((value, index) => {
                 const newRef = createRef<HTMLDivElement>();
-                refs[key] = newRef;
-                return <div key={key} className="letter" ref={newRef}>
+                refs[index] = newRef;
+                return <div key={index} className="letter" ref={newRef}>
                     <div>{value}</div>
                 </div>
                 })

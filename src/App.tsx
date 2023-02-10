@@ -11,12 +11,8 @@ function App() {
 
   return (
     <div className="App" >
-        <p>
-          Hey there.
-        </p>
-        <div ref={parentContainer}>
+        <div>
           <Header />
-          
         </div>
     </div>
   );
