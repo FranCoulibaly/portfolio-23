@@ -11,14 +11,14 @@ export interface Props {
 const Header = () => {
     const container = useRef<HTMLDivElement>(null);
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
+    const nameRef = useRef<HTMLDivElement>(null);
 
 
     let name: string = "FRANCESCA COULIBALY";
     let nameArr: string[] = name.split('');
-    const refs: any[] = [];
+    const letterRefs: any[] = [];
 
     useLayoutEffect(function(): any {
-        console.log(nameArr);
         let width = windowSize.current[0];
         let height= windowSize.current[1];
         let x = (): number => {
@@ -27,43 +27,59 @@ const Header = () => {
         let y = (): number => {
             return Math.random() * (height - 200);
             }
-
-        refs.forEach(value => {
-            gsap.fromTo(value.current, {
+        
+        letterRefs.forEach(letterRef => {
+            let floating = gsap.fromTo(letterRef.current, {
                 x: x,
                 y: y,
             },
             {
+                id: "letters",
                 duration: Math.random() * 100, 
                 x: x,
                 y: y,
                 
             }); 
-        });
-
-        refs.forEach(ref => {
-            gsap.to(ref.current, {
-                x: 0,
-                y: 0,
-                duration: 10,
+            // floating.pause();
+           let scrollAnim =  gsap.to(letterRef.current, {
+                x: (): number => {
+                    if (nameRef.current){
+                        let nameWidth = nameRef.current.clientWidth;
+                        return (width/2) - (nameWidth/2);
+                     } else {
+                        return width/1.5
+                     }
+                    
+                },
+                y: (): number  => {
+                    if (nameRef.current){
+                        let nameHeight = nameRef.current.clientHeight;
+                        return (height/2) - (nameHeight/2)
+                     } else {
+                        console.log("not ref");
+                        return height/1.5
+                     }
+                },
+                duration: 8,
                 scrollTrigger: {
-                    trigger: container.current,
+                    // trigger: container.current,
                     // pin: container.current,
                     start: 10,
                     markers: true,
-                } 
-            })      
+                }, 
+            }) 
+             
         });
     }, []);
      
     return(
         <div className="container" ref={container}>
-            <div className="name">
+            <div className="name" ref ={nameRef}>
             {
             nameArr.map((value, index) => {
-                const newRef = createRef<HTMLDivElement>();
-                refs[index] = newRef;
-                return <div key={index} className="letter" ref={newRef}>
+                const newLetterRef = createRef<HTMLDivElement>();
+                letterRefs[index] = newLetterRef;
+                return <div key={index} className="letter" ref={newLetterRef}>
                     <div>{value}</div>
                 </div>
                 })
