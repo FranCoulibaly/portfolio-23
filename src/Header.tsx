@@ -12,6 +12,7 @@ const Header = () => {
     const container = useRef<HTMLDivElement>(null);
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
     const nameRef = useRef<HTMLDivElement>(null);
+    let q = gsap.utils.selector(nameRef);
 
 
     let name: string = "FRANCESCA COULIBALY";
@@ -27,9 +28,11 @@ const Header = () => {
         let y = (): number => {
             return Math.random() * (height - 200);
             }
-        
-        letterRefs.forEach(letterRef => {
-            let floating = gsap.fromTo(letterRef.current, {
+
+        let ctx = gsap.context(() => {
+            let tl = gsap.timeline();
+
+            tl.fromTo(q(".letter"), {
                 x: x,
                 y: y,
             },
@@ -40,10 +43,13 @@ const Header = () => {
                 y: y,
                 
             }); 
+            // tl.reverse();
             // floating.pause();
-           let scrollAnim =  gsap.to(letterRef.current, {
+           tl.to(q(".letter"), {
+                id: "#scroll1",
                 x: (): number => {
                     if (nameRef.current){
+                        // floating.pause();
                         let nameWidth = nameRef.current.clientWidth;
                         return (width/2) - (nameWidth/2);
                      } else {
@@ -56,20 +62,23 @@ const Header = () => {
                         let nameHeight = nameRef.current.clientHeight;
                         return (height/2) - (nameHeight/2)
                      } else {
-                        console.log("not ref");
                         return height/1.5
                      }
                 },
-                duration: 8,
-                scrollTrigger: {
-                    // trigger: container.current,
-                    // pin: container.current,
-                    start: 10,
-                    markers: true,
-                }, 
-            }) 
+                // duration: 3,
+                
+            });
+            ScrollTrigger.create ({
+                id: "#scroll1",
+                trigger: ".container",
+                // start: "+=5",
+                end: "+=600",
+                markers: true,
+                pin: ".container",
+            });  
              
-        });
+    });
+    return () => ctx.revert(); 
     }, []);
      
     return(
