@@ -7,11 +7,9 @@ import { gsap } from "gsap";
 
 
 function App() {
-   const parentContainer = useRef(null);
-
   return (
     <div className="App" >
-        <div>
+        <div >
           <Header />
         </div>
     </div>

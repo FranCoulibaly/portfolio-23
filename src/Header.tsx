@@ -1,4 +1,4 @@
-import React, { ReactNode, useLayoutEffect, useRef, createRef } from "react";
+import React, { ReactNode, useLayoutEffect, useRef, createRef, useState } from "react";
 import { gsap } from "gsap";
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -14,7 +14,6 @@ const Header = () => {
     const nameRef = useRef<HTMLDivElement>(null);
     let q = gsap.utils.selector(nameRef);
 
-
     let name: string = "FRANCESCA COULIBALY";
     let nameArr: string[] = name.split('');
     const letterRefs: any[] = [];
@@ -23,30 +22,26 @@ const Header = () => {
         let width = windowSize.current[0];
         let height= windowSize.current[1];
         let x = (): number => {
-            return Math.random() * (width - 200);
+            return gsap.utils.random(0, width - 200);
             }
         let y = (): number => {
-            return Math.random() * (height - 200);
+            return gsap.utils.random(0, height - 100);
             }
 
         let ctx = gsap.context(() => {
-            let tl = gsap.timeline();
+            
+            gsap.set(q(".letter"), {x: x, y: y});
 
-            tl.fromTo(q(".letter"), {
-                x: x,
-                y: y,
-            },
-            {
-                id: "letters",
-                duration: Math.random() * 100, 
+            let floating = gsap.to(q(".letter"), {
+                onComplete: () => {floating.reverse()},
+                ease: "none",
+                duration: 4,
                 x: x,
                 y: y,
                 
             }); 
-            // tl.reverse();
-            // floating.pause();
-           tl.to(q(".letter"), {
-                id: "#scroll1",
+
+           let scrollAnim =  gsap.to(q(".letter"), {
                 x: (): number => {
                     if (nameRef.current){
                         // floating.pause();
@@ -54,8 +49,7 @@ const Header = () => {
                         return (width/2) - (nameWidth/2);
                      } else {
                         return width/1.5
-                     }
-                    
+                     } 
                 },
                 y: (): number  => {
                     if (nameRef.current){
@@ -65,20 +59,21 @@ const Header = () => {
                         return height/1.5
                      }
                 },
-                // duration: 3,
-                
+                duration: 3,
             });
+
             ScrollTrigger.create ({
-                id: "#scroll1",
+                animation: scrollAnim,
+                onEnter: () => { floating.pause()},
                 trigger: ".container",
-                // start: "+=5",
-                end: "+=600",
+                start: "+=1",
+                end: "+=400",
                 markers: true,
                 pin: ".container",
-            });  
-             
-    });
-    return () => ctx.revert(); 
+            });          
+        });
+
+        return () => ctx.revert(); 
     }, []);
      
     return(
