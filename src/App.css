@@ -1,6 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
+@font-face {
+  font-family: "Mabry";
+  src: url("./fonts/Mabry-Pro-Medium.ttf");
+}
+
+@font-palette-values  --1 {
+  font-family: Nabla;
+  base-palette: 1;
+}
+@font-palette-values  --2 {
+  font-family: Nabla;
+  base-palette: 2;
+}
+@font-palette-values  --3 {
+  font-family: Nabla;
+  base-palette: 3;
+}
+@font-palette-values  --4 {
+  font-family: Nabla;
+  base-palette: 4;
+}
+@font-palette-values  --5 {
+  font-family: Nabla;
+  base-palette: 5;
+}
+@font-palette-values  --6 {
+  font-family: Nabla;
+  base-palette: 6;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
 .App {
   text-align: center;
-  background-color: #000000;
+  background-color: #fff;
   min-height: 100vh;
   color: white;
   /* font-size: calc(10px + 2vmin); display: flex; */
@@ -12,19 +51,70 @@
   min-height: 100vh;
 }
 .name, .title {
+  font-family: 'Nabla', cursive;
+  font-palette: --1;
   display: flex;
   flex-direction: row;
   width: fit-content;
 }
 .letter {
-  font-size: 2em;
+  font-size: 3em;
   width: .75em;
- 
-
-
+}
+.icons {
+  display: inline-flex;
+  flex-direction: row;
+  float: right;
+  margin: -25px 20px;
+}
+.icon img {
+  padding: 5px;
+  width: 30px;
+}
+.work {
+  margin: -25px 20px;
+  color: #000;
+  float: left;
+  font-family: 'Mabry';
+  font-size: 1.5em;
+  position: absolute;
 
 }
-
+.workText {
+  color: #000;
+  float: left;
+  font-family: 'Mabry';
+  cursor: pointer;
+  /* font-size: 1.5em; */
+}
+.workText:hover{
+  text-decoration: line-through;
+  /* transition: width 0.2s linear; */
+  /* width: 100%; */
+}
+.workText::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 100%;
+  transition: width 0.2s linear;
+  background-image: linear-gradient(transparent 0 48%, black 50% calc(50% + 2px), transparent calc(50% + 2px) 100%);
+}
+.workItems {
+  display: inline;
+}
+.workItem {
+  margin: 0px 10px;
+  color: #000;
+  text-decoration: none;
+}
+.workItem:hover {
+  text-decoration: line-through;
+}
+.fCursor {
+  width: 50px;
+  height: 50px;
+}
 /* .App-header {
   background-color: #000000;
   min-height: 100vh;

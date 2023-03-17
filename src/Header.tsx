@@ -1,15 +1,18 @@
-import React, { ReactNode, useLayoutEffect, useRef, createRef, useState, MouseEventHandler } from "react";
+import React, { ReactNode, useLayoutEffect, useCallback, useRef, createRef, useState, MouseEventHandler } from "react";
 import { gsap } from "gsap";
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import Footer from "./Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export interface Props {
-    letter: string;  
+    scrollState: boolean;
+    setScrollState: (scrollState: boolean) => void; 
 }
 
-const Header = () => {
-    const [scrollState, setScrollState] = useState(false);
+const Header = (props: Props) => {
+    
+    const [mouseHover, setMouseHover] = useState({});
     const container = useRef<HTMLDivElement>(null);
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
     const nameRef = useRef<HTMLDivElement>(null);
@@ -24,17 +27,24 @@ const Header = () => {
     let title: string = "FRONTEND DEVELOPER"
     let nameArr: string[] = name.split('');
     let titleArr: string[] = title.split('');
-    let tl3 = gsap.timeline();
-   
+    const resetWindowScrollPosition = useCallback(() => window.scrollTo(0, 0), [])
 
-    useLayoutEffect(function(): any {
+    useLayoutEffect(() => {
+            window.onbeforeunload = function () {
+            resetWindowScrollPosition()
+          }
+    
         let width = windowSize.current[0];
         let height = windowSize.current[1];
         let floating: any = null;
         
 
         let ctx = gsap.context(() => {
+
             
+            let randomPalette: any = Math.floor(Math.random() * 6);
+            nameRef.current && nameRef.current.style.setProperty('font-palette', '--'+randomPalette);
+            titleRef.current && titleRef.current.style.setProperty('font-palette', '--'+randomPalette);
 
             let x = (): number => {
                 return gsap.utils.random(0, width - 400);
@@ -93,7 +103,7 @@ const Header = () => {
                 y: (): number  => {
                     if (nameRef.current){
                         let nameHeight = nameRef.current.clientHeight;
-                        return (height/2) - (nameHeight/2)
+                        return (height/2) - (nameHeight/2);
                     } else {
                         return height/1.5
                     }
@@ -120,45 +130,54 @@ const Header = () => {
                 duration: 3,
                 scale: ".5",
             }, 0);
-    
+            
         
         
         ScrollTrigger.create ({
             animation: scrollAnim,
             onEnter: () => {
-                setScrollState(true);
+                props.setScrollState(true);
                 tl.pause();
             },
+            // toggleActions: "play pause resume reset",
             trigger: ".container",
-            start: "+=1",
-            end: "+=400",
-            markers: true,
+            start: "=+1",
+            end: "100%",
+            // markers: true,
+            // scrub: true,
+            
             pin: ".container",
             // pinSpacing: false,
         });
-    });
+
         
-    
 
+    });
         return () => ctx.revert(); 
-    }, []);
-    
-    
-    const handleMouseMove = (e: any) => {
-        let ctx = gsap.context(() => {
-            if (!scrollState){
-                let xTo = gsap.quickTo(q(".letter"), "x", {duration: 1, ease: "easeOut"}),
-                    yTo = gsap.quickTo(q(".letter"), "y", {duration: 1, ease: "easeOut"});
+    }, [resetWindowScrollPosition]);
 
-                xTo(e.pageX);
-                yTo(e.pageY);
-                yTo.tween.pause(0.8);
-            }
-        });
-        return () => ctx.revert();
-    }
+    useLayoutEffect(() => {
+        let fCursor = q(".fCursor");
+        const moveCursor = (e: MouseEvent) => {
+            // console.log("moving");
+            gsap.to(fCursor, {
+                x: e.pageX,
+                y: e.pageY,
+                ease: "elastic.out(1, 0.3)"
+              });
+        }
+
+        window.addEventListener('mousemove', moveCursor);
+        
+
+    },[])
+
     return(
-        <div className="container" ref={container} onMouseMove={(e) => {handleMouseMove(e)}}>
+        <div className="container" ref={container}>
+            <div className='fCursor'><svg viewBox="0 0 150 150">
+  <path d="M75,100 C88.8071187,100 100,88.8071187 100,75 C100,61.1928813 88.8071187,50 75,50 C61.1928813,50 50,61.1928813 50,75 C50,88.8071187 61.1928813,100 75,100 Z"></path>
+  </svg></div>
+            <Footer/>
             <div className="name" ref={nameRef}>
             {
             nameArr.map((value, index) => {
@@ -181,9 +200,14 @@ const Header = () => {
                 })
             }
             </div>
+           
         </div>
     )  
       
 };
 
 export default Header;
+
+// mouse repel example
+// https://codepen.io/biblos/pen/KRJmey
+// https://greensock.com/forums/topic/23468-mouse-repel-animation/
