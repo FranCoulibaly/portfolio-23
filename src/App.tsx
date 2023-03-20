@@ -15,7 +15,6 @@ function App() {
     <div className="App">
         <div >
           <Header scrollState={scrollState} setScrollState={setScrollState}/>
-          
         </div>
     </div>
   );

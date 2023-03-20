@@ -3,7 +3,18 @@
   font-family: "Mabry";
   src: url("./fonts/Mabry-Pro-Medium.ttf");
 }
-
+@media screen and (max-width: 480px) {
+  .App {
+    max-width: 100vw;
+  }
+  .letter {
+    font-size: 1.5em !important;
+    width: .67em !important;
+  } 
+  .workItems {
+    display: block !important;
+  }
+ } 
 @font-palette-values  --1 {
   font-family: Nabla;
   base-palette: 1;
