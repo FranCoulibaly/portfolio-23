@@ -1,10 +1,6 @@
-import React, { createRef, HTMLAttributes, useLayoutEffect, useRef, useState } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import Header from './Header';
-import Footer from './Footer';
 import './App.css';
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
-import { gsap } from "gsap";
 import './fonts/Mabry-Pro-Medium.ttf';
 
 

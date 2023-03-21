@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, createRef, useState, MouseEventHandler } from "react";
+import React, { useRef, useState, } from "react";
 import { gsap } from "gsap";
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import githubLogo from './img/github-mark.png';
@@ -17,6 +17,7 @@ const Footer = () => {
             
         const handleClick = (e: any) => {
             e.preventDefault();
+            // console.log(showWork);
             setShowWork(current => !current);
         }
 
