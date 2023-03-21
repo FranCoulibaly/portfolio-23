@@ -76,14 +76,14 @@ body {
   display: inline-flex;
   flex-direction: row;
   float: right;
-  margin: -25px 20px;
+  margin: 20px;
 }
 .icon img {
   padding: 5px;
   width: 30px;
 }
 .work {
-  margin: -25px 20px;
+  margin: 20px;
   color: #000;
   float: left;
   font-family: 'Mabry';
