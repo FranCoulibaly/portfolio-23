@@ -156,29 +156,9 @@ const Header = (props: Props) => {
         return () => ctx.revert(); 
     }, [resetWindowScrollPosition]);
 
-    // useLayoutEffect(() => {
-    //     let fCursor = q(".fCursor");
-    //     const moveCursor = (e: MouseEvent) => {
-    //         // console.log("moving");
-    //         gsap.to(fCursor, {
-    //             x: e.pageX,
-    //             y: e.pageY,
-    //             ease: "elastic.out(1, 0.3)"
-    //           });
-    //     }
-
-    //     window.addEventListener('mousemove', moveCursor);
-        
-
-    // },[])
-
     return(
         <div className="container" ref={container}>
-            {/* <div className='fCursor'>
-                <svg viewBox="0 0 150 150">
-                    <path d="M75,100 C88.8071187,100 100,88.8071187 100,75 C100,61.1928813 88.8071187,50 75,50 C61.1928813,50 50,61.1928813 50,75 C50,88.8071187 61.1928813,100 75,100 Z"></path>
-                </svg>
-            </div> */}
+           
             {
               props.scrollState ? <Footer/> : null
             }

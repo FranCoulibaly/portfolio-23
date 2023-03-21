@@ -17,7 +17,6 @@ const Footer = () => {
             
         const handleClick = (e: any) => {
             e.preventDefault();
-            // console.log(showWork);
             setShowWork(current => !current);
         }
 
