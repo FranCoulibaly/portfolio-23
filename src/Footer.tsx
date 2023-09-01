@@ -5,22 +5,31 @@ import githubLogo from './img/github-mark.png';
 import linkedinLogo from './img/linkedin-2166.svg';
 import mailLogo from './img/mail-5709.svg'
 
-
-
 const Footer = () => {
-    
     gsap.registerPlugin(ScrollTrigger);
     const mainRef = useRef<HTMLDivElement>(null);
     const [showWork, setShowWork] = useState(false);
-
- 
-            
-        const handleClick = (e: any) => {
-            e.preventDefault();
-            // console.log(showWork);
-            setShowWork(current => !current);
-        }
-
+   
+    const handleClick = (e: any) => {
+        e.preventDefault();
+        setShowWork(current => !current);
+    }
+    const workItems = [{
+            url: "https://apollinaris.co.nz/",
+            classNum: "one",
+        }, 
+        {
+        url: "https://thedataangel.com/",
+            classNum: "two",
+        },
+        {
+            url: "https://meetingsstrategy.com/",
+            classNum: "three",
+        },
+       {
+          url: "https://swapit-yarn.com/",
+           classNum: "four",
+       }]
 
     return (
         <div className="footerWrapper" ref={mainRef}>
@@ -30,10 +39,13 @@ const Footer = () => {
             
                 { showWork ? (
                 <div className="workItems">
-                    <a href="https://apollinaris.co.nz/" target="_blank" className="workItem one">01</a>
+                    {workItems.map((item, index) => {
+                        <a href={item.url} target="_blank" className=`workItem ${item.classNum}`>0{index}</a>
+                    })}
+{/*                     <a href="https://apollinaris.co.nz/" target="_blank" className="workItem one">01</a>
                     <a href="https://francesyarns.co.nz/" target="_blank" className="workItem two">02</a>
                     <a href="https://thedataangel.com/" target="_blank" className="workItem three">03</a>
-                    <a href="https://meetingsstrategy.com/" target="_blank" className="workItem four">04</a>
+                    <a href="https://meetingsstrategy.com/" target="_blank" className="workItem four">04</a> */}
                 </div>
                 ) : null }
             </div>
