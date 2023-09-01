@@ -14,22 +14,6 @@ const Footer = () => {
         e.preventDefault();
         setShowWork(current => !current);
     }
-    const workItems = [{
-            url: "https://apollinaris.co.nz/",
-            classNum: "one",
-        }, 
-        {
-        url: "https://thedataangel.com/",
-            classNum: "two",
-        },
-        {
-            url: "https://meetingsstrategy.com/",
-            classNum: "three",
-        },
-       {
-          url: "https://swapit-yarn.com/",
-           classNum: "four",
-       }]
 
     return (
         <div className="footerWrapper" ref={mainRef}>
@@ -39,13 +23,11 @@ const Footer = () => {
             
                 { showWork ? (
                 <div className="workItems">
-                    { workItems.map((item, index) => {
-                        <a href={item.url} target="_blank" className={`workItem ${item.classNum}`}>0{index}</a>                                     
-                    })}
-{/*                     <a href="https://apollinaris.co.nz/" target="_blank" className="workItem one">01</a>
-                    <a href="https://francesyarns.co.nz/" target="_blank" className="workItem two">02</a>
+                  
+                    <a href="https://apollinaris.co.nz/" target="_blank" className="workItem one">01</a>
+                    <a href="https://swapit-yarn.com/" target="_blank" className="workItem two">02</a>
                     <a href="https://thedataangel.com/" target="_blank" className="workItem three">03</a>
-                    <a href="https://meetingsstrategy.com/" target="_blank" className="workItem four">04</a> */}
+                    <a href="https://meetingsstrategy.com/" target="_blank" className="workItem four">04</a>
                 </div>
                 ) : null }
             </div>
